@@ -111,7 +111,7 @@ client.on("message", async (msg) => {
     default:
       break;
   }
- if(msg.content.indexOf("넷") === 0 || msg.content === "러너넷" || msg.content.includes("-넷-") || msg.content.includes("갓러너")||msg.content.includes("좆러너") ||msg.content.includes("똥러너") ||msg.content.includes("넷러너")){
+ if(msg.content.includes("넷") || msg.content.includes("러너")){
   const canvas = Canvas.createCanvas(700,250)
   const ctx = canvas.getContext("2d")
 
@@ -141,7 +141,37 @@ client.on("message", async (msg) => {
   const attachment = new MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
   msg.channel.send(attachment)
- }
+ } else if (msg.content === "갓겜"){
+    const canvas = Canvas.createCanvas(700,250)
+    const ctx = canvas.getContext("2d")
+  
+    const background = await Canvas.loadImage("./ex.png")
+    ctx.drawImage(background,0,0,canvas.width, canvas.height)
+  
+    ctx.strokeStyle= "#74037b"
+    ctx.strokeRect(0,0, canvas.width, canvas.height)
+  
+    ctx.font= "28px sans-serif";
+    ctx.fillStyle = "#ffffff"
+    ctx.fillText("갓겜은 물론 \"넷\"을 말하겠지?", canvas.width/2.5, canvas.height/3.5)
+  
+    ctx.font = applyText(canvas, `${msg.author.username}!`)
+    ctx.fillStyle = '#ffffff';
+    ctx.fillText(`${msg.author.username}!`, canvas.width / 2.5, canvas.height / 1.6);
+  
+  
+  
+    ctx.beginPath();
+    ctx.arc(125,125,100,0,Math.PI*2,true)
+    ctx.closePath()
+    ctx.clip()
+    
+    const avatar = await Canvas.loadImage(msg.author.displayAvatarURL({format:"jpg"}))
+    ctx.drawImage(avatar, 25,25,200,200)
+    const attachment = new MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
+  
+    msg.channel.send(attachment)
+   }
 });
 
 client.login(process.env.TOKEN);
