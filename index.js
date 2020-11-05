@@ -9,6 +9,7 @@ const client = new Client({partials:["MESSAGE","CHANNEL","REACTION"]});
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`);
 });
+
 const applyText = (canvas, text) => {
 	const ctx = canvas.getContext('2d');
 
@@ -25,7 +26,15 @@ const applyText = (canvas, text) => {
 	return ctx.font;
 };
 
+const isMul = (text) => {
+  if([...text].filter(_=>_!=="?").length===0) return true
+
+  return false
+}
+
 client.on("message", async (msg) => {
+  console.log(`${msg.author.username} : ${msg.content}`);
+  
   let attachment;
   switch (msg.content) {
     case `${PREFIX}우리핵확대`:
@@ -171,6 +180,17 @@ client.on("message", async (msg) => {
     const attachment = new MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
   
     msg.channel.send(attachment)
+   }
+
+   if(isMul(msg.content) && !msg.author.bot){
+     const max = Math.ceil(msg.content.length + 5)
+     const min = Math.floor(msg.content.length)
+     const random = Math.floor(Math.random()*(max-min-1)+min)
+     let result = ""
+     for (let i = 0; i < random; i++) {
+       result+="?"
+     }
+     msg.channel.send(result)
    }
 });
 
