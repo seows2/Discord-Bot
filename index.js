@@ -27,6 +27,7 @@ const applyText = (canvas, text) => {
 };
 
 const isMul = (text) => {
+  if(text.length === 0) return false
   if([...text].filter(_=>_!=="?").length===0) return true
 
   return false
@@ -79,10 +80,21 @@ client.on("message", async (msg) => {
       attachment = new MessageAttachment(`icon_44.gif`);
       msg.channel.send(attachment);
       break;
+    case `${PREFIX}서걱`:
+      attachment = new MessageAttachment(`seogeok.gif`);
+      msg.channel.send(attachment);
+      break;
+    case `${PREFIX}중남`:
+      attachment = new MessageAttachment(`jungnam.gif`);
+      msg.channel.send(attachment);
+      break;
+    case `${PREFIX}명령어`:
+      msg.reply(`\n!우리핵확대\n!페페손씻\n!화사\n!씹덕\n!볼트공중\n!xqcSlam\n!더하기펀치\n!서걱`);
+      break;
     case `${PREFIX}씹덕`:
       attachment = new MessageAttachment(`icon_12.gif`);
       attachment2 = new MessageAttachment(`icon_16.gif`);
-      msg.channel.send(attachment);
+      await msg.channel.send(attachment);
       msg.channel.send(attachment2);
       break;
     case `${PREFIX}넷러너`:
@@ -120,7 +132,7 @@ client.on("message", async (msg) => {
     default:
       break;
   }
- if(msg.content.includes("넷") || msg.content.includes("러너")){
+ if((msg.content.includes("넷") || msg.content.includes("러너")) && !msg.author.bot){
   const canvas = Canvas.createCanvas(700,250)
   const ctx = canvas.getContext("2d")
 
@@ -150,7 +162,7 @@ client.on("message", async (msg) => {
   const attachment = new MessageAttachment(canvas.toBuffer(), 'welcome-image.png');
 
   msg.channel.send(attachment)
- } else if (msg.content === "갓겜"){
+ } else if (msg.content.includes("갓겜") && !msg.author.bot){
     const canvas = Canvas.createCanvas(700,250)
     const ctx = canvas.getContext("2d")
   
@@ -162,7 +174,7 @@ client.on("message", async (msg) => {
   
     ctx.font= "28px sans-serif";
     ctx.fillStyle = "#ffffff"
-    ctx.fillText("갓겜은 물론 \"넷\"을 말하겠지?", canvas.width/2.5, canvas.height/3.5)
+    ctx.fillText("갓겜은 물론 \"넷\"을 말하는거지?", canvas.width/2.5, canvas.height/3.5)
   
     ctx.font = applyText(canvas, `${msg.author.username}!`)
     ctx.fillStyle = '#ffffff';
