@@ -85,8 +85,9 @@ client.on("message", async (msg) => {
       msg.channel.send(attachment);
       break;
     case `${PREFIX}중남`:
-      attachment = new MessageAttachment(`jungnam.gif`);
-      msg.channel.send(attachment);
+      const random = Math.floor(Math.random()*4)+1
+      attachment = new MessageAttachment(`jungnam${random}.gif`);
+      msg.channel.send(`${random}번째 중남 당첨!\n`,attachment);
       break;
     case `${PREFIX}명령어`:
       msg.reply(`\n!우리핵확대\n!페페손씻\n!화사\n!씹덕\n!볼트공중\n!xqcSlam\n!더하기펀치\n!서걱`);
